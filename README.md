@@ -6,7 +6,7 @@
 
 [demo下载地址](https://github.com/canceel/Android_with_Flutter/raw/master/apk/app.apk)
 
-![1544848869](/Users/mac/AndroidStudioProjects/Android_with_Flutter/img/1544848869.png)
+![](https://github.com/canceel/Android_with_Flutter/blob/master/img/1544848869.png?raw=true)
 
 #### 一. 集成文档
 
