@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        key {
+            keyAlias 'shenme'
+            keyPassword 'app123'
+            storeFile file('app.keystore')
+            storePassword 'app123'
+        }
+    }
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    defaultConfig {
+        applicationId "com.shenme.example"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "true"
+            signingConfig signingConfigs.key
+            debuggable true
+        }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            signingConfig signingConfigs.key
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def date = new Date()
+                    def formattedDate = date.format('yyyyMMdd')
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName = outputFile.name.replace(".apk", "-${defaultConfig.versionName}-${formattedDate}.apk")
+                        outputFileName = fileName
+                    }
+                }
+            }
+        }
+    }
+
+//    //此处添加渠道，gradle会自动打包
+//    /**
+//     * 存在这个，native调用原生会奔溃
+//     * 2018-12-15 12:05:22.403 7902-7902/com.shenme.example E/flutter: [ERROR:flutter/runtime/dart_vm.cc(259)] VM snapshot must be valid.
+//     * 2018-12-15 12:05:22.403 7902-7902/com.shenme.example A/flutter: [FATAL:flutter/shell/common/shell.cc(212)] Check failed: vm. Must be able to initialize the VM.
+//     *
+//     *
+//     *     --------- beginning of crash
+//     * 2018-12-15 12:05:22.403 7902-7902/com.shenme.example A/libc: Fatal signal 6 (SIGABRT), code -6 in tid 7902 (.shenme.example), pid 7902 (.shenme.example)
+//     */
+//    flavorDimensions "tier"
+//    productFlavors {
+//        //官网渠道
+//        Guanwang {
+//            dimension "tier"
+//        }
+//    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':common')
+    implementation project(':flutter')
+}
