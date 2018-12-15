@@ -4,6 +4,10 @@
 
 安卓原生APP集成Flutter Demo，及Flutter使用帮助
 
+[demo下载地址](https://github.com/canceel/Android_with_Flutter/raw/master/apk/app.apk)
+
+![1544848869](/Users/mac/AndroidStudioProjects/Android_with_Flutter/img/1544848869.png)
+
 #### 一. 集成文档
 
 1. [集成文档](https://github.com/flutter/flutter/wiki/Add-Flutter-to-existing-apps#experiment-turn-the-flutter-project-into-a-module)
